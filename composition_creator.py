@@ -8,6 +8,7 @@ NR_SEQ_PL = 9
 # how many different layouts will be generated
 NR_OF_GENERATED_COMPOSITIONS = 5
 
+
 # read all pools from text file
 def read_combinations():
     # [1, 1, 2, 3, 2, 3, 2, 1, 2, 0]
@@ -16,7 +17,6 @@ def read_combinations():
             combinations_container = [0]*10
             line = line.split()
             yield line
-    
 def list_expand(pool, digits):
     '''creating list of pool*digits
     pool = ["A", "B", "C"]
@@ -60,22 +60,10 @@ def is_allowed_composed_3strip(composed_face, lenght):
         return False
     else:
         return False
-
-
-def print_composedface(composedface):
-    # printing the layout of the composed face in the command line
-    print(" ", end="")
-    print("_"*int((MAX_LENGHT/50-1)))
-    for row in composedface:
-        print("|", end="")
-        for item in row:
-            if item != 0:
-                print((item-1)*"_", end="|")
-        print("")
-
+                   
+            
 # create 3x9 container to represent a composed face, reading left to right
 strip_container = np.zeros(NR_STRIP*NR_SEQ_PL, dtype=int).reshape(NR_STRIP, NR_SEQ_PL)
-
 
 
 def composition_creator(possiblecombinations):
@@ -111,16 +99,11 @@ def composition_creator(possiblecombinations):
                 # check if face is allowed
                 if is_allowed_composed_3strip(strip_container, MAX_LENGHT) == True:
                     if i == 0:
-                        # print("_"*80)
-                        # print("combination: ",combination)
-                        # print("")
                         # write to txt file
                         f.write("\n")
                         for item in combination:
                             f.write("{}\t".format(str(item)))
                         f.write("\t")
-                    # print("possibility: ",i+1)
-                    # print(strip_container)
                     # print()
                     for array in strip_container:
                         for item in array:
@@ -134,6 +117,17 @@ def composition_creator(possiblecombinations):
         print("added: ",combination)
     f.close()
 
+    
+def print_composedface(composedface):
+    # printing the layout of the composed face in the command line
+    print(" ", end="")
+    print("_"*int((MAX_LENGHT/50-1)))
+    for row in composedface:
+        print("|", end="")
+        for item in row:
+            if item != 0:
+                print((item-1)*"_", end="|")
+        print("")
 
 
 if __name__ == '__main__':
