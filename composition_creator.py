@@ -59,6 +59,8 @@ def is_allowed_composed_3strip(composed_face, lenght):
         #  [ 6 13 20 26 36 44 44 44 44]]
         if np.intersect1d(composed_face[r,:], composed_face[r-1,:]).size <= 1:
             if np.intersect1d(composed_face[r,:], composed_face[r+1,:]).size <= 1:
+                # no adjacent lamellas first and third strip
+                ## if np.intersect1d(composed_face[r-1,:], composed_face[r+1,:]).size <= 1:
                 return True
         return False
     else:
