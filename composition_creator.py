@@ -47,21 +47,25 @@ def is_allowed_composed_3strip(composed_face, lenght):
     # checking for desired lenght
     if np.count_nonzero(np.sum(composed_face, axis=1) == lenght/50) == NR_STRIP:
         # checking for overlapping adjacent lamellas
-        composed_face = np.cumsum(composed_face, axis=1)
+        composed_face_sum = np.cumsum(composed_face, axis=1)
         r = 1
         c = 0
         # check for empty face
         if composed_face[0, 0] == 0:
             return False
-        # comparing strip ends of middle strip with lower and upper strip
-        # [[ 9 13 25 36 44 44 44 44 44]
-        #  [ 5 14 21 30 34 44 44 44 44]
-        #  [ 6 13 20 26 36 44 44 44 44]]
-        if np.intersect1d(composed_face[r,:], composed_face[r-1,:]).size <= 1:
-            if np.intersect1d(composed_face[r,:], composed_face[r+1,:]).size <= 1:
-                # no adjacent lamellas first and third strip
-                ## if np.intersect1d(composed_face[r-1,:], composed_face[r+1,:]).size <= 1:
-                return True
+        # check for CZ max 4 different lenghts in 1 line
+        if np.unique(composed_face[r-1,:).size <= 4 and np.unique(composed_face[r,:).size <= 4 and np.unique(composed_face[r+1,:).size <= 4:
+            # comparing strip ends of middle strip with lower and upper strip
+            # [[ 9 13 25 36 44 44 44 44 44]
+            #  [ 5 14 21 30 34 44 44 44 44]
+            #  [ 6 13 20 26 36 44 44 44 44]]
+            if np.intersect1d(composed_face_sum[r,:], composed_face_sum[r-1,:]).size <= 1:
+                if np.intersect1d(composed_face_sum[r,:], composed_face_sum[r+1,:]).size <= 1:
+                    # no adjacent lamellas first and third strip
+                    ## if np.intersect1d(composed_face_sum[r-1,:], composed_face_sum[r+1,:]).size <= 1:
+                    return True
+        else:
+            return False
         return False
     else:
         return False
